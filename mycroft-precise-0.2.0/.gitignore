@@ -1,0 +1,31 @@
+/dist/
+/build/
+.cache/
+/.idea/
+__pycache__/
+*.pyc
+*.egg-info/
+/*.pb
+/*.params
+/*.net
+/*.pbtxt
+/*.txt
+/*.wav
+/other/
+/.venv/
+/stats.json
+/data/*/
+/wakewords/
+
+# Data folders
+/*/wake-word/
+/*/not-wake-word/
+/*/test/
+
+!requirements.txt
+
+# jenkins branch
+/wake-words.txt
+/all/
+/mycroft-precise/
+/models/
