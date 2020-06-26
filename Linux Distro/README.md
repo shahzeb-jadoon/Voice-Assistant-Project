@@ -12,7 +12,7 @@ It is not necessary that you use Ubuntu. I used it because I was told as a new u
 
 ### How to Get Ubuntu:
 
-Here is the [website](https://ubuntu.com/download/desktop) that I used to get the `.iso` file for Ubuntu. You need to create a bootable USB that runs this `.iso` file. It is recommended that you use a USB with at least 4GB storage, but I kept it safe and used one with 8GB storage. There are many guides as to how one can install and run Ubuntu (and I leave this as a challenge to the Computer Science people to figure out your best resource and implement it). 
+Here is the [Ubuntu website](https://ubuntu.com/download/desktop) that I used to get the `.iso` file for Ubuntu. You need to create a bootable USB that runs this `.iso` file. It is recommended that you use a USB with at least 4GB storage, but I kept it safe and used one with 8GB storage. There are many guides as to how one can install and run Ubuntu (and I leave this as a challenge to the Computer Science people to figure out your best resource and implement it). 
 
 ### How I Implemented Ubuntu:
 
