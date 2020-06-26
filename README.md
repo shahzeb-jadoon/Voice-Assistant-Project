@@ -19,7 +19,7 @@ bash dev_setup.sh
 
 ### Step 2: Implementing Tux:
 
-The first thing that needs to be done is to place [Hey-Tux.tgz file](https://github.com/shahzeb-jadoon/Voice-Assistant-Project/tree/master/Mycroft-Precise)(found in the Mycroft-Precise directory of this GitHub repository) in the `.mycroft/precise/` folder on your machine. Before moving on to the next step, unzip the `Hey-Tux.tgz` in the same folder (`.mycroft/precise/`) using the following command:
+The first thing that needs to be done is to place [Hey-Tux.tgz file](https://github.com/shahzeb-jadoon/Voice-Assistant-Project/tree/master/Mycroft-Precise) (found in the Mycroft-Precise directory of this GitHub repository) in the `.mycroft/precise/` folder on your machine. Before moving on to the next step, unzip the `Hey-Tux.tgz` in the same folder (`.mycroft/precise/`) using the following command:
 
 ```bash
 tar -xvzf Hey-Tux.tgz
