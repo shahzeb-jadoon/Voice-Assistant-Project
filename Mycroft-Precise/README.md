@@ -116,9 +116,19 @@ Epoch 60/60
 
 ### 3. precise-listen:
 
+After the creation of this initial model, we can do a demo using live microphone audio input by running the `precise-collect` command. It will listen to the microphone and keep outputting either `.` if it does not hear the wake word or `!` if it does hear it. This is the [sample run](https://github.com/MycroftAI/mycroft-precise/wiki/Training-your-own-wake-word#how-to-train-your-own-wake-word) from MycroftAI.
 
+```bash
+$ precise-listen hey-computer.net
+Using TensorFlow backend.
+2018-02-23 12:46:22.622717: I tensorflow/core/platform/cpu_feature_guard.cc:137] Your CPU supports instructions that this TensorFlow binary was not compiled to use: SSE4.1 SSE4.2 AVX AVX2 FMA
+ALSA lib pcm_dmix.c:1099:(snd_pcm_dmix_open) unable to open slave
+ALSA lib pcm_route.c:867:(find_matching_chmap) Found no matching channel map
+ALSA lib pcm_dmix.c:1099:(snd_pcm_dmix_open) unable to open slave
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+```
 
-If you create your wake-word model just using these initially collected recordings of the wake-word, your voice assistant will wake up on everything since it does not recognize any not-wake-words (which would basically be everything else). In order to reduce false activations, you need to to either record words and sentences that resemble in sound to your wake-word (I would personally recommend this step - record similar sounding words/sentences 10-20 times for each one), or you can get a random set of sounds and train your model on it. The downside of obtaining a large audio dataset is that your wake-word might be within one of the audio files and might get listed as a not-wake-word (but in my experience it is highly unlikely if you have a wake-word that is not used within normal conversation).
+If you create your wake-word model just using these initially collected recordings of the wake-word, your voice assistant will wake up on everything since it does not recognize any not-wake-words (which would basically be everything else - words it shouldn't wake up on). In order to reduce false activations, you need to to either record words and sentences that resemble in sound to your wake-word (thisstep has more potency since the audio that you record sounds similar to the wake-word and drastically reduces false activations), or you can get a random set of sounds and train your model on it. The downside of obtaining a large audio dataset is that your wake-word might be within one of the audio files and might get listed as a not-wake-word (but in my experience it is highly unlikely if you have a wake-word that is not used within normal conversation).
 
 #### a. Recording Not-Wake-Words:
 
@@ -128,9 +138,14 @@ To record your own false activations, launch `precise-listen` in save mode:
 precise-listen hey-computer.net -s hey-computer/not-wake-word
 ```
 
-What this will do is
+While this is activated, you can say words that sound similar to your wake-word (after a second or two interval). If the model activates, Precise will automatically store that recording in the `hey-computer/not-wake-word` folder. Make sure you *NEVER* say the wake-word while this command is running. After you have recorded similar sounding words/sentences 10-20 times for each one, you can retrain your model with the `precise-train` command again:
+
+```bash
+precise-train hey-computer.net hey-computer/ -e 600
+```
 
 #### b. Obtaining Not-Wake-Words:
+
 
 
 
