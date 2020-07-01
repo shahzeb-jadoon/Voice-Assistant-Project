@@ -128,7 +128,7 @@ ALSA lib pcm_dmix.c:1099:(snd_pcm_dmix_open) unable to open slave
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 ```
 
-If you create your wake-word model just using these initially collected recordings of the wake-word, your voice assistant will wake up on everything since it does not recognize any not-wake-words (which would basically be everything else - words it shouldn't wake up on). In order to reduce false activations, you need to to either record words and sentences that resemble in sound to your wake-word (thisstep has more potency since the audio that you record sounds similar to the wake-word and drastically reduces false activations), or you can get a random set of sounds and train your model on it. The downside of obtaining a large audio dataset is that your wake-word might be within one of the audio files and might get listed as a not-wake-word (but in my experience it is highly unlikely if you have a wake-word that is not used within normal conversation).
+If you create your wake-word model just using these initially collected recordings of the wake-word, your voice assistant will wake up on everything since it does not recognize any not-wake-words (which would basically be everything else - words it shouldn't wake up on). In order to reduce false activations, you need to to either record words and sentences that resemble in sound to your wake-word, or you can get a random set of sounds and train your model on it. The downside of obtaining a large audio dataset is that your wake-word might be within one of the audio files and might get listed as a not-wake-word (but in my experience it is highly unlikely if you have a wake-word that is not used within normal conversation).
 
 #### a. Recording Not-Wake-Words:
 
@@ -144,9 +144,12 @@ While this is activated, you can say words that sound similar to your wake-word 
 precise-train hey-computer.net hey-computer/ -e 600
 ```
 
+You can stop training with *`Ctrl + C`* once the accuracy (*acc*) gets close to 1.0. Now, you can repeat the demo by running `precise-listen` again. Your model will have substantially improved as it now knows not to wake up on everything.
+
+I would recommend adding some of the recently recorded files into the `hey-computer/test/not-wake-word` folder as then you can see the accuracy of your model with the not-wake-words.
+
 #### b. Obtaining Not-Wake-Words:
 
-
-
+At this stage, your model might still be activating on daily sounds. This is where an audio dataset comes in handy. If you can get some long audio files, 
 
 
