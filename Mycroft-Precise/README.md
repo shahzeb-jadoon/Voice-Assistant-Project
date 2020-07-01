@@ -150,6 +150,8 @@ I would recommend adding some of the recently recorded files into the `hey-compu
 
 #### b. Obtaining Not-Wake-Words:
 
-At this stage, your model might still be activating on daily sounds. This is where an audio dataset comes in handy. If you can get some long audio files, 
+At this stage, your model should still be activating on daily sounds/noises. This is where an audio dataset comes in handy. As instructed by the MycroftAI team, a good place to start looking for audio data is the [Public Domain Sounds Backup](http://pdsounds.tuxfamily.org/). Other resources that I found useful can be found in this article [Over 1.5TB's of Labeled Audio Datasets](https://towardsdatascience.com/a-data-lakes-worth-of-audio-datasets-b45b88cd4ad) (the ones I used to train Tux were the [LibriSpeech](https://www.openslr.org/12/) and the [VoxCeleb](http://www.robots.ox.ac.uk/~vgg/data/voxceleb/) datasets). 
+
+If you can get some long audio files, they can be converted to the right format using the command line tool `ffmpeg`.
 
 
