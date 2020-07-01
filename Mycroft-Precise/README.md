@@ -69,6 +69,8 @@ Saved as hey-computer.00.wav
 Press space to record (esc to exit)...
 ```
 
+The name `hey-computer` is used for explaining purposes, and can be changed to anything you want to. For future reference as well, the name `hey-computer` can be swapped with whatever you want, even for the names of folders and the name of the model.
+
 After the command is executed, you will be prompted to give a name to the recording. Afterwards, you'll press *space* to start and stop the recording. It is advised to have at least one (or two) seconds of silence before you say the wake-word within the recording. The recording is saved within the same folder (*mycroft-precise-0.2.0*). You should only say the wake-word once per recording. It is advised to record as many recordings as necessary to make the model better. Try to record those people as many times as possible for whom the voice assistant does not correctly understand that it is being called. I personally recorded in places which were not fully quiet (outdoors, library, and in a room) but I was mindful that I don't have a lot of background noise. I did this because in most scenarios that the voice assistant is being used, it'll have some sort of background noise. 
 
 You can use a different tool to record audio as well, but by using precise-collect you will get the audio in the format that is utilized by the voice assistant (WAV files in little-endian, 16 bit, mono, 16000hz PCM format). You can read in more detail [here](https://github.com/MycroftAI/mycroft-precise/wiki/Training-your-own-wake-word#how-to-train-your-own-wake-word).
@@ -150,8 +152,62 @@ I would recommend adding some of the recently recorded files into the `hey-compu
 
 #### b. Obtaining Not-Wake-Words:
 
-At this stage, your model should still be activating on daily sounds/noises. This is where an audio dataset comes in handy. As instructed by the MycroftAI team, a good place to start looking for audio data is the [Public Domain Sounds Backup](http://pdsounds.tuxfamily.org/). Other resources that I found useful can be found in this article [Over 1.5TB's of Labeled Audio Datasets](https://towardsdatascience.com/a-data-lakes-worth-of-audio-datasets-b45b88cd4ad) (the ones I used to train Tux were the [LibriSpeech](https://www.openslr.org/12/) and the [VoxCeleb](http://www.robots.ox.ac.uk/~vgg/data/voxceleb/) datasets). 
+At this stage, your model should still be activating on daily sounds/noises. This is where an audio dataset comes in handy. As instructed by the MycroftAI team, a good place to start looking for audio data is the [Public Domain Sounds Backup](http://pdsounds.tuxfamily.org/). You can download it with the following:
 
-If you can get some long audio files, they can be converted to the right format using the command line tool `ffmpeg`.
+```bash
+cd data/random
+wget http://downloads.tuxfamily.org/pdsounds/pdsounds_march2009.7z
+# Install p7zip
+7z x pdsounds_march2009.7z
+cd ../..
+```
 
+Other resources that I found useful can be found in this article [Over 1.5TB's of Labeled Audio Datasets](https://towardsdatascience.com/a-data-lakes-worth-of-audio-datasets-b45b88cd4ad) (the ones I used to train Tux were the [LibriSpeech](https://www.openslr.org/12/) and the [VoxCeleb](http://www.robots.ox.ac.uk/~vgg/data/voxceleb/) datasets). 
 
+If you can get some long audio files, they can be converted to the right format using the command line tool `ffmpeg`. MycroftAI provided the following script that you can use:
+
+```bash
+SOURCE_DIR=data/random/mp3
+DEST_DIR=data/random
+
+for i in $SOURCE_DIR/*.mp3; do echo "Converting $i..."; fn=${i##*/}; ffmpeg -i "$i" -acodec pcm_s16le -ar 16000 -ac 1 -f wav "$DEST_DIR/${fn%.*}.wav"; done
+```
+
+This will place all the converted files into `data/random` folder. 
+
+### 4. precise-train-incremental:
+
+Once we have the correct format data placed within `data/random`, we are now able to reduce the false activations using the `precise-train-incremental` command:
+
+```bash
+precise-train-incremental hey-computer.net hey-computer/
+```
+
+This will make precise go through all the `.wav` audio files placed within `data/random` and move the ones that cause a false activation into the `hey-computer/not-wake-word` directory, and then it retrains the model again. This step can take time depending on the length of the audio files, and also just how many audio files there are.
+
+### 5. precise-test:
+
+For this step, I'd suggest counting the number of files that have been added to the `hey-computer/not-wake-word` directory - lets say it's 1000. From the remaining audio files in the `data/random` randomly select enough files so that it makes almost 20% of the number of counted files within the `hey-computer/not-wake-word` directory - so in this case it'll be 200 audio files from `data/random`.
+
+Having done this we can move on to testing our model. This is done using the `precise-test` command:
+
+```bash
+precise-test hey-computer.net hey-computer/
+```
+
+The file `hey-computer.net` is the [Keras] model that we created using the `precise-train` command and all `precise-test` is doing is running the model on the test data that we added in our `hey-computer/test` directory. It provides a statistical analysis of the testing of the model - gives its accuracy of prediction on the test set.
+
+If you want to again check the model using live microphone audio output, you should use the `precise-listen` command again.
+
+### 6. precise-convert:
+
+So far we have used HDF5 model file trained with Keras `(.net)`, but the last step is to convert this file to be used by TensorFlow `(.pb)`. This will be done using the following command:
+
+```bash
+precise-convert hey-computer.net
+```
+
+This should create two files:
+
+ - `hey-computer.pb` - TensorFlow neural network
+ - `hey-computer.pb.params` - details specific to Precise for how the audio was processed for the network
