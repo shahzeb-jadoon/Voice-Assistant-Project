@@ -33,7 +33,7 @@ cd mycroft-core
 ./bin/mycroft-config edit user
 ```
 
-In the window that appears, copy the following code (you can choose to put `Hey-Tux-Old.pb` in place of `Hey-Tux-New.pb` if you want to try the older Precise wake-word model for Tux).
+In the window that appears, copy the following code (you can choose to put `Hey-Tux-Old.pb` in place of `Hey-Tux-New.pb` if you want to try the older Precise wake-word model for Tux). Within `<user folder name>` you should write down your user account's folder name (it shoud be obvious that the names shoud be written without the `<>`):
 
 ```javascript
 {
@@ -44,7 +44,7 @@ In the window that appears, copy the following code (you can choose to put `Hey-
   "hotwords": {
     "hey tux": {
         "module": "precise",
-        "local_model_file": "/home/shahzeb/.mycroft/precise/Hey-Tux-New.pb"
+        "local_model_file": "/home/<user folder name>/.mycroft/precise/Hey-Tux-New.pb"
     }
   }
 }
@@ -79,6 +79,7 @@ To end all background services of Tux, simply type:
 ### Support or Contact
 
 If you have any questions, comments, or concerns, you can email me at shahzeb.jadoon.sj@gmail.com
+
 
 
 

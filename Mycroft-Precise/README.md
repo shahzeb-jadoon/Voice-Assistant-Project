@@ -162,7 +162,7 @@ wget http://downloads.tuxfamily.org/pdsounds/pdsounds_march2009.7z
 cd ../..
 ```
 
-Other resources that I found useful can be found in this article [Over 1.5TB's of Labeled Audio Datasets](https://towardsdatascience.com/a-data-lakes-worth-of-audio-datasets-b45b88cd4ad) (the ones I used to train Tux were the [LibriSpeech](https://www.openslr.org/12/) and the [VoxCeleb](http://www.robots.ox.ac.uk/~vgg/data/voxceleb/) datasets). 
+Other resources that I found useful can be found in this article [Over 1.5TB's of Labeled Audio Datasets](https://towardsdatascience.com/a-data-lakes-worth-of-audio-datasets-b45b88cd4ad) (the ones I used to train Tux were the [LibriSpeech](https://www.openslr.org/12/) and the [VoxCeleb](http://www.robots.ox.ac.uk/~vgg/data/voxceleb/) datasets). Resources listed by the MycroftAI team are the [precise-data](https://github.com/MycroftAI/precise-data/tree/models) and the [Precise-Community-Data](https://github.com/MycroftAI/precise-community-data)
 
 If you can get some long audio files, they can be converted to the right format using the command line tool `ffmpeg`. MycroftAI provided the following script that you can use:
 
@@ -211,3 +211,38 @@ This should create two files:
 
  - `hey-computer.pb` - TensorFlow neural network
  - `hey-computer.pb.params` - details specific to Precise for how the audio was processed for the network
+ 
+ ## Finalizing:
+ 
+ To finalize things, you should follow the instructions [on this page](https://github.com/shahzeb-jadoon/Voice-Assistant-Project) except for Step 2. For you, Step 2 will look something like this:
+ 
+ Copy your `.pb` files (including the `.pb.params`) file into the `.mycroft/precise/` folder on your machine. Next, follow the following steps to implement your own name for the voice assistant:
+
+```bash
+cd ~/
+cd mycroft-core
+./bin/mycroft-config edit user
+```
+
+In the window that appears, copy the following code. Where it says `<insert wake-word>`, write your own wake-word within the double quotation marks, and within <filename> write the name you have given your TensorFlow model. Within `<user folder name>` you should write down your user account's folder name (it shoud be obvious that the names shoud be written without the `<>`):
+
+```javascript
+{
+  "max_allowed_core_version": 20.2,
+  "listener": {
+    "wake_word": "<insert wake-word>"
+  },
+  "hotwords": {
+    "<insert wake-word>": {
+        "module": "precise",
+        "local_model_file": "/home/<user folder name>/.mycroft/precise/<filename>.pb"
+    }
+  }
+}
+```
+
+Press *`Ctrl + S`* to save and *`Ctrl + X`* to exit the window. Next type the following command:
+
+```bash
+./bin/mycroft-config reload
+```
