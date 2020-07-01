@@ -246,3 +246,5 @@ Press *`Ctrl + S`* to save and *`Ctrl + X`* to exit the window. Next type the fo
 ```bash
 ./bin/mycroft-config reload
 ```
+
+After this you can continue on to Step 3 as mentioned [here](https://github.com/shahzeb-jadoon/Voice-Assistant-Project).
