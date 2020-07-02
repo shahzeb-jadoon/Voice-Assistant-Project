@@ -247,4 +247,7 @@ Press *`Ctrl + S`* to save and *`Ctrl + X`* to exit the window. Next type the fo
 ./bin/mycroft-config reload
 ```
 
-After this you can continue on to Step 3 as mentioned [here](https://github.com/shahzeb-jadoon/Voice-Assistant-Project).
+You can use this [JSON Formatter & Validator tool](https://jsonformatter.curiousconcept.com/) to make sure that the code you typed in is correct. After this you can continue on to Step 3 as mentioned [here](https://github.com/shahzeb-jadoon/Voice-Assistant-Project).
+
+If your wake-word is not working for some reason, you can use this [Wake Word Troubleshooting](https://mycroft-ai.gitbook.io/docs/using-mycroft-ai/troubleshooting/wake-word-troubleshooting) page provided by MycroftAI to figure out isues. 
+

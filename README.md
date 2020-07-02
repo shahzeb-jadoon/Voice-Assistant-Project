@@ -50,7 +50,7 @@ In the window that appears, copy the following code (you can choose to put `Hey-
 }
 ```
 
-Press *`Ctrl + S`* to save and *`Ctrl + X`* to exit the window. Next type the following command:
+Press *`Ctrl + S`* to save and *`Ctrl + X`* to exit the window. You can use this [JSON Formatter & Validator tool](https://jsonformatter.curiousconcept.com/) to make sure that the code you typed in is correct. Next type the following command:
 
 ```bash
 ./bin/mycroft-config reload
